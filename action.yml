@@ -111,6 +111,7 @@ runs:
         remote-protocol: ${{ inputs.protocol }}
         remote-port: ${{ inputs.port }}
         local-path: ./dist/
+        sync: delta
 
     # - name: Upload to FTP Server
     #   uses: SamKirkland/FTP-Deploy-Action@v4.3.4
