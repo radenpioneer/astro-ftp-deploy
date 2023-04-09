@@ -101,23 +101,23 @@ runs:
         cd ${{ inputs.path }}
         $PACKAGE_MANAGER run build
 
-    - name: "Deploy"
-      uses: milanmk/actions-file-deployer@master
-      with:
-        remote-host: ${{ inputs.server }}
-        remote-user: ${{ inputs.username }}
-        remote-password: ${{ inputs.password }}
-        remote-path: ${{ inputs.directory }}
-        remote-protocol: ${{ inputs.protocol }}
-        remote-port: ${{ inputs.port }}
-        local-path: ./dist/
-        sync: delta
-
-    # - name: Upload to FTP Server
-    #   uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+    # - name: "Deploy"
+    #   uses: milanmk/actions-file-deployer@master
     #   with:
-    #     server: ${{ inputs.server }}
-    #     username: ${{ inputs.username }}
-    #     password: ${{ inputs.password }}
-    #     server-dir: ${{ inputs.directory }}
-    #     local-dir: ./dist/
+    #     remote-host: ${{ inputs.server }}
+    #     remote-user: ${{ inputs.username }}
+    #     remote-password: ${{ inputs.password }}
+    #     remote-path: ${{ inputs.directory }}
+    #     remote-protocol: ${{ inputs.protocol }}
+    #     remote-port: ${{ inputs.port }}
+    #     local-path: ./dist/
+    #     sync: delta
+
+    - name: Upload to FTP Server
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ inputs.server }}
+        username: ${{ inputs.username }}
+        password: ${{ inputs.password }}
+        server-dir: ${{ inputs.directory }}
+        local-dir: ./dist/
