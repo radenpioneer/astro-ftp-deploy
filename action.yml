@@ -5,22 +5,22 @@ branding:
   color: "orange"
 inputs:
   server:
-    description: "FTP/SSH server hostname"
+    description: "FTP server hostname"
     required: true
   username:
-    description: "FTP/SSH username"
+    description: "FTP username"
     required: true
   password:
-    description: "FTP/SSH password"
+    description: "FTP password"
     required: true
   directory:
     description: "Path to upload to (on the server). Must end with trailing slash /"
     required: false
     default: "public_html/"
-  protocol:
-    description: "Protocol to use, supports `ftp` and `sftp`. Defaults to `ftp`"
-    required: false
-    default: "ftp"
+  # protocol:
+  #   description: "Protocol to use, supports `ftp` and `sftp`. Defaults to `ftp`"
+  #   required: false
+  #   default: "ftp"
   port:
     description: "Remote server port"
     required: false
@@ -117,6 +117,7 @@ runs:
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
         server: ${{ inputs.server }}
+        port: ${{ inputs.port }}
         username: ${{ inputs.username }}
         password: ${{ inputs.password }}
         server-dir: ${{ inputs.directory }}
