@@ -1,9 +1,22 @@
-name: "Astro Deploy"
-description: "A composite action that prepares your Astro site to be deployed to GitHub Pages"
+name: "Astro Deploy to FTP"
+description: "A composite action that prepares your Astro site to be deployed to any FTP server."
 branding:
   icon: "box"
   color: "orange"
 inputs:
+  server:
+    description: "FTP server address, without protocol"
+    required: true
+  username:
+    description: "FTP username"
+    required: true
+  password:
+    description: "FTP password"
+    required: true
+  directory:
+    description: "Path to upload to (on the server). Must end with trailing slash /"
+    required: false
+    default: "public_html/"
   path:
     description: "Path of the directory containing your site"
     required: false
@@ -80,7 +93,11 @@ runs:
         cd ${{ inputs.path }}
         $PACKAGE_MANAGER run build
 
-    - name: Upload Pages Artifact
-      uses: actions/upload-pages-artifact@v1
+    - name: Upload to FTP Server
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
-        path: "${{ inputs.path }}/dist/"
+        server: ${{ inputs.server }}
+        username: ${{ inputs.username }}
+        password: ${{ inputs.password }}
+        server-dir: ${{ inputs.directory }}
+        local-dir: ./dist/
