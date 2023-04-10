@@ -74,7 +74,7 @@ jobs:
 
 SFTP is unsupported at current time.
 
-### Attribution
+## Attribution
 
 - This Github Action is a fork of Astro's official [`withastro/actions`](https://github.com/withastro/action), and modified for FTP deployment.
 - This action uses [`SamKirkland/FTP-Deploy-Action`](https://github.com/SamKirkland/FTP-Deploy-Action) under the hood. 
