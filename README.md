@@ -1,19 +1,31 @@
-# Astro Deploy Action
+# Deploy Astro using FTP
 
-This action for [Astro](https://github.com/withastro/astro) builds your Astro project for [GitHub Pages](https://pages.github.com/).
-
-For more information, please see our complete deployment guide—[Deploy your Astro Site to GitHub Pages](https://docs.astro.build/en/guides/deploy/github/).
+This action for [Astro](https://github.com/withastro/astro) builds your Astro project for deployment using traditional FTP upload.
 
 ## Usage
 
-> **Note**: Want to get started even faster? Create a repository from our official [GitHub Pages template](https://github.com/withastro/github-pages)!
+> **Note**: Want to get started even faster? Create a repository from our minimal [template](https://github.com/radenpioneer/astro-ftp-template)!
 
 ### Inputs
 
-- `path` - Optional: the root location of your Astro project inside the repository.
-- `node-version` - Optional: the specific version of Node that should be used to build your site. Defaults to `16`.
-- `package-manager` - Optional: the Node package manager that should be used to install dependencies and build your site. Automatically detected based on your lockfile.
-- `resolve-dep-from-path` - Optional: If the dependency file should be resolved from the root location of your Astro project. Defaults to `true`.
+#### Required
+
+> **Warning**: Never put your sensitive information in version control! Put these information in `secrets` variable.
+
+- `server` - The address of your FTP server, e.g `ftp.myftpserver.com`.
+- `username` - The username of your FTP server.
+- `password` - The password of your FTP server.
+
+
+#### Optional
+
+- `directory` - The path to upload to, on your FTP server, relative to your FTP root. Must end with trailing slash, e.g `www/`. Defaults to `public_html/`.
+- `protocol` - The protocol to use on your FTP server. Accepts `ftp`, `ftps`, and `ftps-legacy`. Defaults to `ftp`.
+- `port` - The port of your FTP server. Defaults to `21`.
+- `path` - The root location of your Astro project inside the repository.
+- `node-version` - The specific version of Node that should be used to build your site. Defaults to `16`.
+- `package-manager` - The Node package manager that should be used to install dependencies and build your site. Automatically detected based on your lockfile.
+- `resolve-dep-from-path` - If the dependency file should be resolved from the root location of your Astro project. Defaults to `true`.
 
 ### Example workflow:
 
@@ -32,11 +44,9 @@ on:
   # Allows you to run this workflow manually from the Actions tab on GitHub.
   workflow_dispatch:
   
-# Allow this job to clone the repo and create a page deployment
+# Allow this job to clone the repo and create a deployment
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 jobs:
   build:
@@ -46,20 +56,25 @@ jobs:
         uses: actions/checkout@v3
       - name: Install, build, and upload your site output
         uses: withastro/action@v0
-        # with:
-            # path: . # The root location of your Astro project inside the repository. (optional)
-            # node-version: 16 # The specific version of Node that should be used to build your site. Defaults to 16. (optional)
-            # package-manager: yarn # The Node package manager that should be used to install dependencies and build your site. Automatically detected based on your lockfile. (optional)
-            # resolve-dep-from-path: false # If the dependency file should be resolved from the root location of your Astro project. Defaults to `true`. (optional)
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          # directory: public_html/ # The path to upload to, on your FTP server, relative to your FTP root. Must end with trailing slash. (optional)
+          # protocol: ftp # The protocol to use on your FTP server. (optional)
+          # port: "21" # The port of your FTP server. (optional)
+          # path: . # The root location of your Astro project inside the repository. (optional)
+          # node-version: 16 # The specific version of Node that should be used to build your site. Defaults to 16. (optional)
+          # package-manager: yarn # The Node package manager that should be used to install dependencies and build your site. Automatically detected based on your lockfile. (optional)
+          # resolve-dep-from-path: false # If the dependency file should be resolved from the root location of your Astro project. Defaults to `true`. (optional)
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
 ```
+
+### SFTP Support
+
+SFTP is unsupported at current time.
+
+### Attribution
+
+- This Github Action is a fork of Astro's official [`withastro/actions`](https://github.com/withastro/action), and modified for FTP deployment.
+- This action uses [`SamKirkland/FTP-Deploy-Action`](https://github.com/SamKirkland/FTP-Deploy-Action) under the hood. 

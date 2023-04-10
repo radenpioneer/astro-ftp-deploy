@@ -17,10 +17,10 @@ inputs:
     description: "Path to upload to (on the server). Must end with trailing slash /"
     required: false
     default: "public_html/"
-  # protocol:
-  #   description: "Protocol to use, supports `ftp` and `sftp`. Defaults to `ftp`"
-  #   required: false
-  #   default: "ftp"
+  protocol:
+    description: "Protocol to use, supports `ftp`, `ftps` and `ftps-legacy`. Defaults to `ftp`"
+    required: false
+    default: "ftp"
   port:
     description: "Remote server port"
     required: false
@@ -101,23 +101,12 @@ runs:
         cd ${{ inputs.path }}
         $PACKAGE_MANAGER run build
 
-    # - name: "Deploy"
-    #   uses: milanmk/actions-file-deployer@master
-    #   with:
-    #     remote-host: ${{ inputs.server }}
-    #     remote-user: ${{ inputs.username }}
-    #     remote-password: ${{ inputs.password }}
-    #     remote-path: ${{ inputs.directory }}
-    #     remote-protocol: ${{ inputs.protocol }}
-    #     remote-port: ${{ inputs.port }}
-    #     local-path: ./dist/
-    #     sync: delta
-
     - name: Upload to FTP Server
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
         server: ${{ inputs.server }}
         port: ${{ inputs.port }}
+        protocol: ${{ inputs.protocol }}
         username: ${{ inputs.username }}
         password: ${{ inputs.password }}
         server-dir: ${{ inputs.directory }}
