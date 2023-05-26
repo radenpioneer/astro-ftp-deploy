@@ -32,7 +32,7 @@ inputs:
   node-version:
     description: "The node version to use"
     required: false
-    default: "16"
+    default: "18"
   package-manager:
     description: "If not automatically detectable, you may specify your preferred package manager"
     required: false
@@ -42,6 +42,10 @@ inputs:
     type: boolean
     required: false
     default: true 
+  dry-run:
+    description:
+    required: false
+    default: false
 
 runs:
   using: composite
@@ -110,4 +114,5 @@ runs:
         username: ${{ inputs.username }}
         password: ${{ inputs.password }}
         server-dir: ${{ inputs.directory }}
+        dry-run: ${{ inputs.dry-run }}
         local-dir: ./dist/
