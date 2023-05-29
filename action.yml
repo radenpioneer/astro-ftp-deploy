@@ -1,4 +1,4 @@
-name: "Astro Deploy to FTP"
+name: "Astro FTP"
 description: "A composite action that prepares your Astro site to be deployed to any FTP server."
 branding:
   icon: "box"
