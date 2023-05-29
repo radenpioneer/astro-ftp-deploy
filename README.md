@@ -55,7 +55,7 @@ jobs:
       - name: Checkout your repository using git
         uses: actions/checkout@v3
       - name: Install, build, and upload your site output
-        uses: radenpioneer/astro-ftp@main
+        uses: radenpioneer/astro-ftp-deploy@v0.1.0
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
@@ -76,5 +76,5 @@ SFTP is unsupported at current time.
 
 ## Attribution
 
-- This Github Action is a fork of Astro's official [`withastro/actions`](https://github.com/withastro/action), and modified for FTP deployment.
+- This Github Action is imported from Astro's official [`withastro/actions`](https://github.com/withastro/action), and modified for FTP deployment.
 - This action uses [`SamKirkland/FTP-Deploy-Action`](https://github.com/SamKirkland/FTP-Deploy-Action) under the hood. 
