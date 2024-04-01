@@ -106,7 +106,7 @@ runs:
         $PACKAGE_MANAGER run build
 
     - name: Upload to FTP Server
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: ${{ inputs.server }}
         port: ${{ inputs.port }}
