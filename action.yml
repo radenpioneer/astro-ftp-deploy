@@ -79,7 +79,7 @@ runs:
         version: 7.x.x
 
     - name: Setup Node
-      uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4
+      uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4
       if: inputs.resolve-dep-from-path == true 
       with:
         node-version: ${{ inputs.node-version }}
@@ -87,7 +87,7 @@ runs:
         cache-dependency-path: "${{ inputs.path }}/${{ env.LOCKFILE }}"
 
     - name: Setup Node
-      uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4
+      uses: actions/setup-node@0a44ba7841725637a19e28fa30b79a866c81b0a6 # v4
       if: inputs.resolve-dep-from-path == false 
       with:
         node-version: ${{ inputs.node-version }}
